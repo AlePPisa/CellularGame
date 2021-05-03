@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9157213443471650972}
   - component: {fileID: 2998186488443863097}
+  - component: {fileID: 8756602601973405410}
   m_Layer: 5
   m_Name: ConwayCell
   m_TagString: Untagged
@@ -121,6 +122,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4589469658197287362}
   m_CullTransparentMesh: 0
+--- !u!95 &8756602601973405410
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4589469658197287362}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b11c57c5ad024b5c9292aa573691cef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6814807824985051852
 GameObject:
   m_ObjectHideFlags: 0

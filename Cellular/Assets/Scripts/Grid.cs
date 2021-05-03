@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -18,9 +19,16 @@ public class Grid : MonoBehaviour
     public GameObject cellPrefab;
     public int maxSteps = 5;
     private GameObject[,] _cells;
-    
+    private bool[,] _currentBoardState;
+    public TextMeshProUGUI textCounter;
+    public TransitionManager transitionManager;
+    public AudioSource youLostAudio;
+
+    private AudioSource endOfLevelAudio;
     private int step = 0;
-    
+    private bool _isRunning = false;
+    private bool _showingSolution = false;
+    private bool _transitioningSolution = false;
     public int dimension;
     private const string StringPattern = @"[Bb]([0-9]+)/[Ss]([0-9]+)";
     private static readonly Regex Pattern = new Regex(StringPattern);
@@ -84,6 +92,7 @@ public class Grid : MonoBehaviour
     public GameObject[] cellPrefabs;
 
     public string levelMap;
+    public string solutionMap;
 
     private int getIndex(int row, int col)
     {
@@ -103,6 +112,8 @@ public class Grid : MonoBehaviour
 
                 // grid
         _cells = new GameObject[dimension,dimension];
+        _currentBoardState = new bool[dimension,dimension];
+        
         RectTransform placeHolderRectTransform = placeHolderGrid.GetComponent<RectTransform>();
         var localScale = placeHolderRectTransform.localScale;
         var rect = placeHolderRectTransform.rect;
@@ -155,13 +166,14 @@ public class Grid : MonoBehaviour
                 }
 
                 _cells[i, j] = cell;
+                
             }
         }
     }
 
     public void Step()
     {
-        if (step >= maxSteps) { return; }
+        if (step >= maxSteps || _showingSolution) { return; }
         var neighbors = calculateNeighbors();
 
         for (int i = 0; i < dimension; i++)
@@ -177,25 +189,207 @@ public class Grid : MonoBehaviour
         }
 
         step++;
+        textCounter.text = "" + step + "/" + maxSteps;
+
+        if (step == maxSteps)
+        {
+            FinishLevel();
+        }
     }
-
-
+    
     public void fullWipe()
     {
+        if (_isRunning || _showingSolution) return;
+        StartCoroutine(RunSimulation());
+    }
+
+    IEnumerator RunSimulation()
+    {
+        _isRunning = true;
         while (step < maxSteps)
         {
             Step(); // coroutined
-            step++;
+            yield return new WaitForSeconds(0.5f);
         }
+
+        _isRunning = false;
     }
 
     public void Clear()
     {
+        if (_showingSolution) return;
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                _cells[i,j].GetComponent<Cell>().Reset();
+            }
+        }
+
+        step = 0;
+        StopAllCoroutines();
+        _isRunning = false;
+        _showingSolution = false;
+        _transitioningSolution = false;
         
-    }
-    void Start()
-    {
-        SetGrid();
+        textCounter.text = "" + step + "/" + maxSteps;
     }
     
+    void Start()
+    {
+        textCounter.text = "" + step + "/" + maxSteps;
+        endOfLevelAudio = GetComponent<AudioSource>();
+        
+        if (_showingSolution) return;
+        SetGrid();
+    }
+
+    private void SaveAndHideCurrentGrid()
+    {
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                Cell cell = _cells[i, j].GetComponent<Cell>();
+                _currentBoardState[i, j] = cell.alive;
+                cell.SetAlive(false);
+            }
+        }
+    }
+
+    private void ShowCurrentGrid()
+    {
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                _cells[i, j].GetComponent<Cell>().SetAlive(_currentBoardState[i,j]);
+            }
+        }
+    }
+
+    private void ShowSolutionBoard()
+    {
+        _transitioningSolution = true;
+        StartCoroutine(ShowSolutionGrid());
+    }
+
+    IEnumerator ShowSolutionGrid()
+    {
+        SaveAndHideCurrentGrid();
+
+        yield return new WaitForSeconds(0.6f);
+        
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            { 
+                Cell cell =  _cells[i, j].GetComponent<Cell>();
+                cell.ToggleShowSolution();
+                cell.SetAlive(Convert.ToBoolean(Convert.ToInt32(solutionMap[getIndex(i, j)]) - 48));
+            }
+        }
+        
+        _transitioningSolution = false;
+    }
+    
+    private void HideSolutionBoard()
+    {
+        _transitioningSolution = true;
+        StartCoroutine(HideSolutionGrid());
+    }
+
+    IEnumerator HideSolutionGrid()
+    {
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                Cell cell = _cells[i, j].GetComponent<Cell>();
+                cell.ToggleShowSolution();
+                cell.SetAlive(false);
+            }
+        }
+        
+        yield return new WaitForSeconds(0.6f);
+        
+        ShowCurrentGrid();
+        
+        _transitioningSolution = false;
+    }
+
+    public void ToggleSolution()
+    {
+        if (_transitioningSolution) return;
+        if (_showingSolution)
+        {
+            HideSolutionBoard();
+        }
+        else
+        {
+            ShowSolutionBoard();
+        }
+
+        _showingSolution = !_showingSolution;
+    }
+
+    public void StringifyCurrentBoard()
+    {
+        string board = "";
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            { 
+                Cell cell = _cells[j, i].GetComponent<Cell>();
+                if (cell.alive)
+                {
+                    board += "1";
+                }
+                else
+                {
+                    board += "0";
+                }
+            }
+        }
+        
+        Debug.Log(board);
+    }
+
+    public void FinishLevel()
+    {
+        if (IsLevelFinished())
+        {
+            //Play sound
+            endOfLevelAudio.Play();
+            
+            // Start transition
+            transitionManager.FadeIn();
+        }
+        else
+        {
+            StartCoroutine(LevelLost());
+        }
+    }
+
+    IEnumerator LevelLost()
+    {
+        yield return new WaitForSeconds(0.7f);
+        youLostAudio.Play();
+    }
+    
+    public bool IsLevelFinished()
+    {
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                if (_cells[i, j].GetComponent<Cell>().alive != Convert.ToBoolean(Convert.ToInt16(solutionMap[getIndex(i, j)])-48))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 38b465dda6ca44a808c2a5f432f99501
   - enabled: 1
+    path: Assets/Scenes/GridPlay.unity
+    guid: 6e4994bb4d572e64a8fe6dea645bbd11
+  - enabled: 1
+    path: Assets/Scenes/Level1_Test.unity
+    guid: 286fb740382fd45d586b83ff64cc515a
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
