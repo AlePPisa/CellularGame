@@ -1352,7 +1352,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1061305694}
   - component: {fileID: 1061305695}
-  - component: {fileID: 1061305696}
   - component: {fileID: 1061305697}
   m_Layer: 5
   m_Name: GridGameplay
@@ -1394,40 +1393,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeHolderGrid: {fileID: 109288314}
   cellPrefab: {fileID: 3909392838304270412, guid: 9c3cf81b31098424a9d292f2fcdf2878, type: 3}
-  maxSteps: 1
+  maxSteps: 200
   textCounter: {fileID: 1577271913}
   transitionManager: {fileID: 2094392530}
   youLostAudio: {fileID: 1878366677}
-  dimension: 2
+  dimension: 3
   cellPrefabs:
-  - {fileID: 8145006914113626399, guid: 1f89c71614bb0fa4685332ffa7394167, type: 3}
-  - {fileID: 8513971241897591594, guid: 5cd0ff44fb66f43f6ab74964363eb1f6, type: 3}
-  levelMap: 0000
-  solutionMap: 0110
---- !u!114 &1061305696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061305693}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  - {fileID: 2271225167820918043, guid: 1ad4164b4d1dc4c8097be5b6367a7de6, type: 3}
+  levelMap: 000000000
+  solutionMap: 000010000
 --- !u!82 &1061305697
 AudioSource:
   m_ObjectHideFlags: 0
