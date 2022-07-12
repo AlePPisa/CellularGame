@@ -7,6 +7,30 @@ using UnityEngine.UI;
 
 public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,  IPointerDownHandler
 {
+    [Header("Highlight Settings")] 
+    [Tooltip("Percentage at which the sprite will grow and shrink")]
+    public float highlightScale = 0.05f;
+    public float highlightAnimationTime = 0.5f;
+    
+    [Header("Hold Settings")]
+    [Tooltip("Percentage at which the sprite will grow and shrink")]
+    public float holdScaleFactor = 0.05f;
+    public Vector3 holdRotationInDegrees = new Vector3(0, 0, 10f);
+    public float holdAnimationTime = 0.25f;
+    
+   
+    [Header("Pointer Exit Settings")]
+    public float exitAnimationTime = 0.25f;
+
+   
+    [Header("On Click Settings")] 
+    public float timeToZeroRotation = 0.2f;
+    [Tooltip("Percentage at which the sprite will grow and shrink")]
+    public float clickScale = 0.1f;
+    public float shrinkTime = 0.15f;
+    public float growTimeAfterShrink = 0.1f;
+    public float reachNormalSizeTime = 0.1f;
+    
     private bool _clicked = false;
     private bool _highlighted = false;
     private Vector3 _originalScale;
@@ -23,9 +47,9 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         
         if (_clicked) return;
 
-        Vector3 scale = _originalScale + Vector3.one * 0.05f;
+        Vector3 scale = _originalScale + Vector3.one * highlightScale;
         Vector3 rotation = Vector3.zero;
-        float time = 0.5f;
+        float time = highlightAnimationTime;
         LeanTweenType rotateEaseType = LeanTweenType.easeInOutSine;
         LeanTweenType scaleEaseType = LeanTweenType.easeInOutSine;
         LeanTweenType loopType = LeanTweenType.pingPong;
@@ -41,7 +65,7 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         Vector3 scale = _originalScale;
         Vector3 rotation = Vector3.zero;
-        float time = 0.25f;
+        float time = exitAnimationTime;
         LeanTweenType rotateEaseType = LeanTweenType.easeInOutSine;
         LeanTweenType scaleEaseType = LeanTweenType.easeInOutSine;
         LeanTweenType loopType = LeanTweenType.once;
@@ -53,9 +77,9 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (_clicked) return;
         
-        Vector3 scale = _originalScale - Vector3.one * 0.05f;
-        Vector3 rotation = new Vector3(0, 0, 10f);
-        float time = 0.25f;
+        Vector3 scale = _originalScale - Vector3.one * holdScaleFactor;
+        Vector3 rotation = holdRotationInDegrees;
+        float time = holdAnimationTime;
         LeanTweenType rotateEaseType = LeanTweenType.easeInOutSine;
         LeanTweenType scaleEaseType = LeanTweenType.easeInOutSine;
         LeanTweenType rotateLoopType = LeanTweenType.pingPong;
@@ -70,11 +94,11 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         _clicked = true;
         LeanTween.cancel(gameObject);
-        LeanTween.rotate(gameObject, Vector3.zero, 0.2f).setEaseInOutSine();
-        LeanTween.scale(gameObject, _originalScale - Vector3.one * 0.1f, 0.15f).setEaseInOutSine()
-            .setOnComplete(() => LeanTween.scale(gameObject, _originalScale + Vector3.one * 0.1f, 0.1f).setEaseInOutSine()
-                .setOnComplete(() => LeanTween.scale(gameObject, _originalScale, 0.1f).setEaseInOutSine()
-                    .setOnComplete(ClickComplete)));
+        LeanTween.rotate(gameObject, Vector3.zero, timeToZeroRotation).setEaseInOutSine(); //zero rotation
+        LeanTween.scale(gameObject, _originalScale - Vector3.one * clickScale, shrinkTime).setEaseInOutSine() // shrink to smaller scale
+            .setOnComplete(() => LeanTween.scale(gameObject, _originalScale + Vector3.one * clickScale, growTimeAfterShrink).setEaseInOutSine() // grow to bigger scale
+                .setOnComplete(() => LeanTween.scale(gameObject, _originalScale, reachNormalSizeTime).setEaseInOutSine() // resize to original size
+                    .setOnComplete(ClickComplete))); // highlight again in case its being highlighted
     }
 
     private void ClickComplete()
