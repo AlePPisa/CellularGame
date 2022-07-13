@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,  IPointerDownHandler
+public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [Header("Highlight Settings")] 
     [Tooltip("Percentage at which the sprite will grow and shrink")]
