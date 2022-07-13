@@ -18,23 +18,35 @@ public class GridSetup : MonoBehaviour
     private const float _gridSpriteOverlapPercentage = 0.10557185f;
 
     private void Start()
+    {   
+        GenerateAndSetGridLayoutSettings();
+        InstantiateGridTiles();
+    }
+
+    /// <summary>
+    /// Generates the appropriate grid layout cell size and spacing given the dimensions of the board. Then sets them.
+    /// </summary>
+    private void GenerateAndSetGridLayoutSettings()
     {
-        // Should input grid settings, and create corresponding Grid Tiles
         _gridLayoutGroup = GetComponent<GridLayoutGroup>();
         _gridContainerRectTransform = GetComponent<RectTransform>();
 
-        float spaceToRemove = (size.x-1) * _gridSpriteOverlapPercentage * _gridContainerRectTransform.rect.width;
-
         float cellSizeX = (float) Math.Floor(_gridContainerRectTransform.rect.width /
-                           (size.x - ((size.x - 1) * _gridSpriteOverlapPercentage)));
+                                             (size.x - ((size.x - 1) * _gridSpriteOverlapPercentage)));
         float cellSizeY = (float) Math.Floor(_gridContainerRectTransform.rect.height /
-                           (size.y - ((size.y - 1) * _gridSpriteOverlapPercentage)));
+                                             (size.y - ((size.y - 1) * _gridSpriteOverlapPercentage)));
 
         float padding = -0.116193f * cellSizeX + 0.834479f; // Using linear regression
 
         _gridLayoutGroup.spacing = new Vector2(padding, padding);
         _gridLayoutGroup.cellSize = new Vector2(cellSizeX, cellSizeY);
-
+    }
+    
+    /// <summary>
+    /// Instantiates all the Grid Tiles necessary to fill the grid layout.
+    /// </summary>
+    private void InstantiateGridTiles()
+    {
         for (int i = 0; i < size.x; i++)
         {
             for (int j = 0; j < size.y; j++)

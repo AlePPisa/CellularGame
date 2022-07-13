@@ -19,6 +19,9 @@ public class CellTweener : MonoBehaviour, IPointerClickHandler
         InstantHide();
     }
 
+    /// <summary>
+    /// Animates the birth of the cell by increasing its size to its original scale and rotating.
+    /// </summary>
     public void AnimateBirth()
     {
         LeanTween.cancel(_cell);
@@ -27,6 +30,9 @@ public class CellTweener : MonoBehaviour, IPointerClickHandler
         LeanTween.scale(_cell, _originalScale, scaleTime).setEaseInOutSine();
     }
     
+    /// <summary>
+    /// Animates the death of a cell by decreasing its size and zeroing rotation.
+    /// </summary>
     public void AnimateDeath()
     {
         LeanTween.cancel(_cell);
@@ -34,11 +40,18 @@ public class CellTweener : MonoBehaviour, IPointerClickHandler
         LeanTween.scale(_cell, Vector3.zero, scaleTime).setEaseInOutSine();
     }
 
+    /// <summary>
+    /// Hides the cell instantaneously by reducing its scale to 0.
+    /// </summary>
     private void InstantHide()
     {
         LeanTween.scale(_cell, Vector3.zero, 0f);
     }
 
+    /// <summary>
+    /// Currently used to detect when a cell is being clicked. Should be deprecated in the future.
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_isAlive)

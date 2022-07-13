@@ -41,6 +41,10 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _originalScale = trans.localScale;
     }
 
+    /// <summary>
+    /// Responsible for animating button when on pointer enter.
+    /// </summary>
+    /// <param name="eventData">Data regarding the current event system</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         _highlighted = true;
@@ -57,6 +61,10 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         AnimateTween(scale, time, scaleEaseType, loopType, rotation, time, rotateEaseType, loopType);
     }
     
+    /// <summary>
+    /// Responsible for animating button when on pointer exit.
+    /// </summary>
+    /// <param name="eventData">Data regarding the current event system</param>
     public void OnPointerExit(PointerEventData eventData)
     {
         _highlighted = false;
@@ -73,6 +81,10 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         AnimateTween(scale, time, scaleEaseType, loopType, rotation, time, rotateEaseType, loopType);
     }
     
+    /// <summary>
+    /// Responsible for animating button when on pointer down.
+    /// </summary>
+    /// <param name="eventData">Data regarding the current event system</param>
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_clicked) return;
@@ -90,6 +102,9 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             .setOnComplete(() => AnimateTween(scale, time, scaleEaseType, scaleLoopType, rotation, time, rotateEaseType, rotateLoopType));
     }
     
+    /// <summary>
+    /// Responsible for animating button when on click.
+    /// </summary>
     public void OnClick()
     {
         _clicked = true;
@@ -101,6 +116,9 @@ public class ButtonTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     .setOnComplete(ClickComplete))); // highlight again in case its being highlighted
     }
 
+    /// <summary>
+    /// Resets the animation to the proper state when click is complete.
+    /// </summary>
     private void ClickComplete()
     {
         _clicked = false;

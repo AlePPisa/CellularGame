@@ -20,6 +20,11 @@ public class Tooltip : MonoBehaviour
         _rectTransform = GetComponent<RectTransform>();
     }
 
+    /// <summary>
+    /// Sets the content and header for the tooltip. If header is left blank it is removed.
+    /// </summary>
+    /// <param name="content">Tooltip's content.</param>
+    /// <param name="header">Tooltip's header.</param>
     public void SetText(string content, string header = "")
     {
         if (string.IsNullOrEmpty(header))
@@ -37,6 +42,14 @@ public class Tooltip : MonoBehaviour
         contentField.text = content;
     }
     private void Update()
+    {
+        UpdateTooltipPosition();
+    }
+
+    /// <summary>
+    /// Moves the tooltip to the mouse position, adjusts for screen edges.
+    /// </summary>
+    private void UpdateTooltipPosition()
     {
         int headerLength = headerField.text.Length;
         int contentLength = contentField.text.Length;

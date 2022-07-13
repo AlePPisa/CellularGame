@@ -17,6 +17,10 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private static LTDescr delay;
     
+    /// <summary>
+    /// Activates delayed call on pointer enter in order to display tooltip after <see cref="delayTime"/> seconds.
+    /// </summary>
+    /// <param name="eventData">Current data regarding the event system.</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         delay = LeanTween.delayedCall(delayTime, () =>
@@ -25,12 +29,19 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         });
     }
 
+    /// <summary>
+    /// Cancels delayed call on pointer exit and hides tooltip.
+    /// </summary>
+    /// <param name="eventData">Current data regarding the event system.</param>
     public void OnPointerExit(PointerEventData eventData)
     {
         LeanTween.cancel(delay.uniqueId);
         TooltipSystem.Hide();
     }
 
+    /// <summary>
+    /// Increases delay time to show tooltip after <see cref="increasedDelayTime"/> seconds.
+    /// </summary>
     public void IncreaseDelayTime()
     {
         delayTime = increasedDelayTime;
