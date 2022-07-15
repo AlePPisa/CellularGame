@@ -55,8 +55,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler
             _cellAnimator.SetTrigger("Birth");
         }
     }
-
-    // Update is called once per frame
+    
     public void Reset()
     {
         SetAlive(_initialCondition);
@@ -66,7 +65,6 @@ public class Cell : MonoBehaviour, IPointerClickHandler
     {
         PlayRandomPutSound();
         SetAlive(!alive);
-        
     }
 
     public void ToggleShowSolution()
@@ -76,7 +74,6 @@ public class Cell : MonoBehaviour, IPointerClickHandler
 
     public void PlayRandomPutSound()
     {
-
         var audio = audioSources[Random.Range(0, audioSources.Length)];
         audio.Stop();
         audio.Play();

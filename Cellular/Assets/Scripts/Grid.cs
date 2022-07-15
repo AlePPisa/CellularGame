@@ -110,7 +110,7 @@ public class Grid : MonoBehaviour
         float cellRealWidth = rect1.width * scale.x;
         float cellRealHeight = rect1.width * scale.y;
 
-                // grid
+        // grid
         _cells = new GameObject[dimension,dimension];
         _currentBoardState = new bool[dimension,dimension];
         

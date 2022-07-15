@@ -6,48 +6,48 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Old Scenes/Menu.unity
     guid: 38b465dda6ca44a808c2a5f432f99501
   - enabled: 1
-    path: Assets/Scenes/Levels/Level1.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level1.unity
     guid: a8896a8815cb6458a826b774e04629ac
   - enabled: 1
-    path: Assets/Scenes/Levels/Level2.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level2.unity
     guid: 942fe618207384246bc746294d0cbf9e
   - enabled: 1
-    path: Assets/Scenes/Levels/Level3.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level3.unity
     guid: 76a11ad11b7b74bdabf7ce2743de1a29
   - enabled: 1
-    path: Assets/Scenes/Levels/Level4.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level4.unity
     guid: 1012e71da1ef4455d961f50bc725f77d
   - enabled: 1
-    path: Assets/Scenes/Levels/Level5.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level5.unity
     guid: e8ef828d6c9cc433b8a52672fc928019
   - enabled: 1
-    path: Assets/Scenes/Levels/Level6.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level6.unity
     guid: 55b1dbfccd74b4ec4a8ee2b0851a2f08
   - enabled: 1
-    path: Assets/Scenes/Levels/Level7.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level7.unity
     guid: 89d32f7129a4a41a5bbd8ad45b2476d5
   - enabled: 1
-    path: Assets/Scenes/Levels/Level8.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level8.unity
     guid: 5a2e40b622da04992b69a22c5a662320
   - enabled: 1
-    path: Assets/Scenes/Levels/Level9.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level9.unity
     guid: b8732db82c5644c53ba21d5ea78dcf5a
   - enabled: 1
-    path: Assets/Scenes/Levels/Level10.unity
+    path: Assets/Scenes/Old Scenes/Levels/Level10.unity
     guid: 7d402f92a724645b6b58b4d08787c1ef
   - enabled: 1
-    path: Assets/Scenes/Levels/LevelAle.unity
+    path: Assets/Scenes/Old Scenes/Levels/LevelAle.unity
     guid: 69ba51843780344e48cdcf2819dc31a4
   - enabled: 1
-    path: Assets/Scenes/Levels/LevelLuis.unity
+    path: Assets/Scenes/Old Scenes/Levels/LevelLuis.unity
     guid: 5bbed9698a7224928baf72e15a1e5324
   - enabled: 1
-    path: Assets/Scenes/Levels/LevelStephan.unity
+    path: Assets/Scenes/Old Scenes/Levels/LevelStephan.unity
     guid: 16b380c769226467ab0c1c068d4952a3
   - enabled: 1
-    path: Assets/Scenes/Levels/FreePlay.unity
+    path: Assets/Scenes/Old Scenes/Levels/FreePlay.unity
     guid: 6a8f33f4332cd47cda52681b0add4eb3
   m_configObjects: {}
